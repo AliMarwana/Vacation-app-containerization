@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # FRONTEND SERVICE (React/Vue/Angular)
+  # ============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: production  # Use production stage
+    container_name: frontend-app
+    ports:
+      - "8080:8080"  # Map host port 80 to container port 80
+    environment:
+      - NODE_ENV=production
+      # - VITE_API_URL=http://backend:5000  # Connect to backend service
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # ============================================
+  # BACKEND SERVICE (Node.js/Express)
+  # ============================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-app
+    ports:
+      - "3000:3000"  # Map host port 5000 to container port 5000
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - DATABASE_URL=postgresql://postgres:password@db:5432/vacationApp
+    depends_on:
+      - db
+    networks:
+      - app-network
+    restart: unless-stopped
+    volumes:
+      - ./backend/uploads:/app/uploads  # Persistent uploads
+      - ./backend/logs:/app/logs        # Persistent logs
+
+  # ============================================
+  # DATABASE SERVICE (PostgreSQL)
+  # ============================================
+  db:
+    image: postgres:16-alpine
+    container_name: postgres-db
+    ports:
+      - "5432:5432"  # Optional: expose for local debugging
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistent data
+      # - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql  # Init scripts
+    networks:
+      - app-network
+
+# ============================================
+# NETWORKS
+# ============================================
+networks:
+  app-network:
+    driver: bridge
+
+# ============================================
+# VOLUMES
+# ============================================
+volumes:
+  postgres_data:
+    driver: local
