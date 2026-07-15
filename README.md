@@ -1,44 +1,31 @@
-# Dream Vacation Destinations
+This project is about containerizing a full stack app called <a <a href="https://github.com/obusorezekiel/Dream-Vacation-App" >Dream Vacation App</a>. </br>
+This project consists of a Frontend React app, a backend Node.js app and a Postgres database. No that few modifications have been made in the backend app because the API call path to Rest countries API has changed. It may be that the moment you will see this project, it will be another path. So take it in consideration. <br>
+We have created a Docker container for each app and ensured the communication among them by using Docker compose.<br>
+To do that, we needed to create Dockerfiles, docker compose file and other files. Here is what was added for each project:<br>
+<ul>
+<li>Frontend: <br>
+ In the Frontend project, we created the Dockerfile. We implemented the multi stage builds to alleviate the size of the final Docker image of the front-end. <br>
+ Therein we installed the node 16 image, set /app as the working directory, installed dependencies from package.json and copied the whole Frontend project. Then we built the project to retrieve app/build. <br>
+ In the second stage, we installed the Nginx image.
+ Nginx is in charge of serving the Frontend. To do that,
+ We previously created the nginx.conf file which is inspired from the <a href="https://docs.docker.com/guides/reactjs/">
+ React.js examples for Docker</a> and copied it in the image.  We copied the app/build to the /usr/share/nginx/html in the container. We then run this command nginx -c /etc/nginx/nginx.conf -g daemon off
+</li>
 
-This application allows users to create a list of countries they'd like to visit, providing basic information about each country. The project is structured to mimic a real-life production environment, employing best practices in software development, deployment, and continuous integration/continuous delivery (CI/CD).
-
-## Setup
-
-### Backend
-1. Navigate to the `backend` directory.
-2. Run `npm install` to install dependencies.
-3. Set up your PostgreSQL database and update the `.env` file with your database URL.
-4. Run `npm start` to start the server.
-
-### Frontend
-1. Navigate to the `frontend` directory.
-2. Run `npm install` to install dependencies.
-3. Update the `.env` file with your API URL (e.g., `REACT_APP_API_URL=http://localhost:3001`).
-4. Run `npm start` to start the React development server.
-
-## Features
-- **Add Countries**: Users can add countries to their dream vacation list.
-- **View Country Details**: Displays capital, population, and region information for each country.
-- **Remove Countries**: Users can remove countries from their list.
-- **Production-Ready Setup**: The project is designed to be scalable and maintainable, following industry-standard practices for deployment and CI/CD.
-
-## Roadmap
-- **CI/CD Implementation**: Automate the build, test, and deployment process using industry-standard CI/CD tools.
-- **Infrastructure as Code (IaC)**: Implement IaC for automated environment setup and management.
-- **Scalability**: Enhance the application to support multiple environments (staging, production) with proper domain names and configurations.
-- **Security**: Utilize Kubernetes Secrets and environment variables for secure data management.
-- **Microservices**: Modularize the application into microservices to improve maintainability and scalability.
-
-## Technologies Used
-- **Frontend**: React
-- **Backend**: Node.js with Express
-- **Database**: PostgreSQL
-- **External API**: REST Countries API
-- **CI/CD**: To be implemented with [CI/CD tools, e.g., GitHub Actions, Jenkins, or Azure DevOps]
-- **Infrastructure as Code**: To be implemented with tools like Terraform or Helm
-
-## Best Practices
-- **Version Control**: All changes are tracked in Git for collaboration and history management.
-- **Environment Management**: Separate configurations for different environments (development, staging, production) using environment variables.
-- **Security**: Sensitive information is managed using environment variables and Kubernetes Secrets.
-- **Documentation**: The project is well-documented to facilitate onboarding and maintenance.
+<li>
+Backend: <br>
+For the Backend project, we also created the Dockerfile. Therein, we installed Node 16, installed the server. 
+</li>
+<li>
+docker-compose.yml:<br>
+In that file, we put three services: frontend, backend and database.<br>
+ As for the frontend, it will be run on the host port 8080 and container port 8080. The Dockerfile directory has been specified therein.<br>
+ As for the backend, we put environment variables DATABASE_URL,
+ PORT, COUNTRIES_API_BASE_URL in an environment file. This file is loaded in the docker compose file. It will be run on the host port 3001 and the container port 3001.<br>
+ As for the postgres container, its base image, namely the Postgres image, has been inserted in the Docker compose file. 
+ We also put  the environment variables POSTGRES_DB, 
+ POSTGRES_USER and POSTGRES_PASSWORD in an .env file and put that file in the Docker compose. We also set volumes for the data<br>
+ Note that all the services are on the same custom bridge network which is named app-network.
+</li>
+</ul>
+Having said this, all you have do right now is to run in the root directory of the project docker-compose up --build after having run Docker Desktop on your computer. You then need to launch http://localhost:8080/ on your browser to add/remove destinations in your database.
