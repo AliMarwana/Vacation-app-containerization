@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
 
 # Start with nodemon for hot reload
 CMD ["nodemon", "server.js"]
