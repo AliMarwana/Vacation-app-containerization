@@ -25,7 +25,7 @@ In that file, we put three services: frontend, backend and database.<br><br>
  PORT, COUNTRIES_API_BASE_URL in an environment file. This file is loaded in the docker compose file. It will be run on the host port 3001 and the container port 3001.<br><br>
  As for the postgres container, its base image, namely the Postgres image, has been inserted in the Docker compose file. 
  We also put  the environment variables POSTGRES_DB, 
- POSTGRES_USER and POSTGRES_PASSWORD in an .env file and put that file in the Docker compose. We also set volumes for the data<br><br>
+ POSTGRES_USER and POSTGRES_PASSWORD in an .env file and put that file in the Docker compose. We also set volumes for the data. It will be run on the host port 5432 and the container port 5432<br><br>
  Note that all the services are on the same custom bridge network which is named app-network.<br>
 </li>
 </ul>
