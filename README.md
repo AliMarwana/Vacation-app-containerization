@@ -1,8 +1,8 @@
 This project is about containerizing a full stack app called
  <a href="https://github.com/obusorezekiel/Dream-Vacation-App" >Dream Vacation App</a>. </br>
 This project consists of a Frontend React app, a backend Node.js app and a Postgres database. No that few modifications have been made in the backend app from the original because the API call path to Rest countries API has been updated. It may be that the moment you will see this project, it will be another path that will be used by Rest countries API. So take it in consideration. <br><br>
-We have created a Docker container for each app and ensured the communication among them by using Docker compose.<br><br>
-To do that, we needed to create Dockerfiles, Docker compose file and other files. Here is what was added for each project:<br><br>
+We have created a Docker container for each app and ensured the communication among them by using Docker compose.<br>
+To do that, we needed to create Dockerfiles, Docker compose file and other files. Here is what was added for each project:<br>
 <ul>
 <li>Frontend<br>
  In the Frontend project, we created the Dockerfile. We implemented the multi stage builds to alleviate the size of the final Docker image of the front-end. <br><br>
@@ -26,7 +26,7 @@ In that file, we put three services: frontend, backend and database.<br><br>
  As for the postgres container, its base image, namely the Postgres image, has been inserted in the Docker compose file. 
  We also put  the environment variables POSTGRES_DB, 
  POSTGRES_USER and POSTGRES_PASSWORD in an .env file and put that file in the Docker compose. We also set volumes for the data<br><br>
- Note that all the services are on the same custom bridge network which is named app-network.
+ Note that all the services are on the same custom bridge network which is named app-network.<br>
 </li>
 </ul>
 Having said this, all you have do right now is to run in the root directory of the project docker-compose up --build after having run Docker Desktop on your computer. You then need to launch http://localhost:8080/ on your browser to add/remove destinations in your database.
