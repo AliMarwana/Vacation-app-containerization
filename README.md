@@ -1,9 +1,10 @@
-This project is about containerizing a full stack app called <a <a href="https://github.com/obusorezekiel/Dream-Vacation-App" >Dream Vacation App</a>. </br>
-This project consists of a Frontend React app, a backend Node.js app and a Postgres database. No that few modifications have been made in the backend app because the API call path to Rest countries API has changed. It may be that the moment you will see this project, it will be another path. So take it in consideration. <br>
+This project is about containerizing a full stack app called
+ <a ="https://github.com/obusorezekiel/Dream-Vacation-App" >Dream Vacation App</a>. </br>
+This project consists of a Frontend React app, a backend Node.js app and a Postgres database. No that few modifications have been made in the backend app from the original because the API call path to Rest countries API has been updated. It may be that the moment you will see this project, it will be another path that will be used by Rest countries API. So take it in consideration. <br>
 We have created a Docker container for each app and ensured the communication among them by using Docker compose.<br>
-To do that, we needed to create Dockerfiles, docker compose file and other files. Here is what was added for each project:<br>
+To do that, we needed to create Dockerfiles, Docker compose file and other files. Here is what was added for each project:<br>
 <ul>
-<li>Frontend: <br>
+<li><h3>Frontend:</h3> <br>
  In the Frontend project, we created the Dockerfile. We implemented the multi stage builds to alleviate the size of the final Docker image of the front-end. <br>
  Therein we installed the node 16 image, set /app as the working directory, installed dependencies from package.json and copied the whole Frontend project. Then we built the project to retrieve app/build. <br>
  In the second stage, we installed the Nginx image.
@@ -13,11 +14,11 @@ To do that, we needed to create Dockerfiles, docker compose file and other files
 </li>
 
 <li>
-Backend: <br>
-For the Backend project, we also created the Dockerfile. Therein, we installed Node 16, installed the server. 
+<h3>Backend: </h3><br>
+For the Backend project, we also created the Dockerfile. Therein, we installed Node 16, installed the dependencies and run the server. 
 </li>
 <li>
-docker-compose.yml:<br>
+<h3>docker-compose.yml:</h3><br>
 In that file, we put three services: frontend, backend and database.<br>
  As for the frontend, it will be run on the host port 8080 and container port 8080. The Dockerfile directory has been specified therein.<br>
  As for the backend, we put environment variables DATABASE_URL,
