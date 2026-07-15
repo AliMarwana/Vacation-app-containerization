@@ -4,7 +4,7 @@ This project consists of a Frontend React app, a backend Node.js app and a Postg
 We have created a Docker container for each app and ensured the communication among them by using Docker compose.<br><br>
 To do that, we needed to create Dockerfiles, Docker compose file and other files. Here is what was added for each project:<br><br>
 <ul>
-<li><h3>Frontend:</h3> <br><br>
+<li>Frontend<br><br>
  In the Frontend project, we created the Dockerfile. We implemented the multi stage builds to alleviate the size of the final Docker image of the front-end. <br><br>
  Therein we installed the node 16 image, set /app as the working directory, installed dependencies from package.json and copied the whole Frontend project. Then we built the project to retrieve app/build. <br><br>
  In the second stage, we installed the Nginx image.
@@ -14,11 +14,11 @@ To do that, we needed to create Dockerfiles, Docker compose file and other files
 </li>
 
 <li>
-<h3>Backend: </h3><br><br>
+Backend:<br><br>
 For the Backend project, we also created the Dockerfile. Therein, we installed Node 16, installed the dependencies and run the server. 
 </li>
 <li>
-<h3>docker-compose.yml:</h3><br><br>
+docker-compose.yml<br><br>
 In that file, we put three services: frontend, backend and database.<br><br>
  As for the frontend, it will be run on the host port 8080 and container port 8080. The Dockerfile directory has been specified therein.<br><br>
  As for the backend, we put environment variables DATABASE_URL,
