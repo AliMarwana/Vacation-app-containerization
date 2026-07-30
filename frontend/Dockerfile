@@ -9,6 +9,7 @@ RUN npm ci
 COPY . .
 ENV REACT_APP_API_URL=http://localhost:3001
 
+
 # Build argument for environment
 
 RUN npm run build
