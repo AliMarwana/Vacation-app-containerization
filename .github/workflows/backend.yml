@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend
-          npm install  # Installs everything in package.json
+          npm ci  # Installs everything in package.json
 
       - name: Run ESLint
         run: |
