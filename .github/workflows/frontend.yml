@@ -29,13 +29,9 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          npm ci  # Installs everything in package.json
+          npm install  # Installs everything in package.json
             # Explicitly install ESLint
 
-      - name: Install lint
-        run: |
-          cd frontend
-          npm install --save-dev eslint-config-react-app
       - name: Run ESLint
         run: |
           cd frontend
