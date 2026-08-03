@@ -39,12 +39,13 @@ jobs:
       - name: Install dependencies
         run: |
           cd backend
-          npm ci
+          npm install  # Installs everything in package.json
+          npm install --save-dev eslint  # Explicitly install ESLint
 
       - name: Run ESLint
         run: |
-          npm install  # Installs everything in package.json
-          npm install --save-dev eslint  # Explicitly install ESLint
+          cd backend
+          npm run lint
 
       - name: Run Security Scan (optional)
         run: |
