@@ -50,7 +50,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./frontend
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/frontend-vacation:${{ github.sha }}
