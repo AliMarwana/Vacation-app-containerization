@@ -40,8 +40,11 @@ jobs:
         run: |
           cd backend
           npm install  # Installs everything in package.json
+      - name: Install lint
+        run: |
+          cd backend
           npm install --save-dev eslint  # Explicitly install ESLint
-
+          
       - name: Run ESLint
         run: |
           cd backend

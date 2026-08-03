@@ -32,6 +32,10 @@ jobs:
           npm install  # Installs everything in package.json
             # Explicitly install ESLint
 
+      - name: Install lint
+        run: |
+          cd frontend
+          npm install --save-dev eslint  # Explicitly install ESLint
       - name: Run ESLint
         run: |
           cd frontend
