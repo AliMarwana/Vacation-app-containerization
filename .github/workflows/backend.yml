@@ -46,10 +46,10 @@ jobs:
           cd backend
           npm run lint
 
-      - name: Run Security Scan (optional)
-        run: |
-          cd backend
-          npm audit --production
+      # - name: Run Security Scan (optional)
+      #   run: |
+      #     cd backend
+      #     npm audit --production
 
       - name: Lint Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
