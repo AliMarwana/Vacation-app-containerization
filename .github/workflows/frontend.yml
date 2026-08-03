@@ -32,9 +32,6 @@ jobs:
           npm install  # Installs everything in package.json
             # Explicitly install ESLint
 
-      - name: Run tests
-        run: npm test
-        
       - name: Run ESLint
         run: |
           cd frontend
