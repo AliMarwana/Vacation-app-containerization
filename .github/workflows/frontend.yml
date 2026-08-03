@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          npm install  # Installs everything in package.json
+          npm ci  # Installs everything in package.json
             # Explicitly install ESLint
 
       - name: Install lint
@@ -39,7 +39,7 @@ jobs:
       - name: Run ESLint
         run: |
           cd frontend
-          npx eslint .
+          npm run lint
   build-and-push:
     runs-on: ubuntu-latest
     steps:
