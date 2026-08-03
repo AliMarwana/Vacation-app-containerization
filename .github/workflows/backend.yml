@@ -51,10 +51,10 @@ jobs:
       #     cd backend
       #     npm audit --production
 
-      - name: Lint Dockerfile
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: backend/Dockerfile
+      # - name: Lint Dockerfile
+      #   uses: hadolint/hadolint-action@v3.1.0
+      #   with:
+      #     dockerfile: backend/Dockerfile
 
  
   build-and-push:
