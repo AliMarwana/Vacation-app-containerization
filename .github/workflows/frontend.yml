@@ -35,7 +35,7 @@ jobs:
       - name: Install lint
         run: |
           cd frontend
-          npm install --save-dev eslint  # Explicitly install ESLint
+          npm install --save-dev eslint-config-react-app
       - name: Run ESLint
         run: |
           cd frontend

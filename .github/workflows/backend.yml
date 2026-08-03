@@ -43,8 +43,8 @@ jobs:
       - name: Install lint
         run: |
           cd backend
-          npm install --save-dev eslint  # Explicitly install ESLint
-          
+          npm install --save-dev eslint-plugin-n@^16.0.0
+
       - name: Run ESLint
         run: |
           cd backend
