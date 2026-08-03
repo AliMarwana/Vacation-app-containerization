@@ -30,12 +30,12 @@ jobs:
         run: |
           cd frontend
           npm install  # Installs everything in package.json
-          npm install --save-dev eslint  # Explicitly install ESLint
+            # Explicitly install ESLint
 
       - name: Run ESLint
         run: |
           cd frontend
-          npm run lint
+          npx eslint .
   build-and-push:
     runs-on: ubuntu-latest
     steps:
