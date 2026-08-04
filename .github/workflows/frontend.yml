@@ -55,43 +55,38 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/frontend-vacation:${{ github.sha }}
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Only deploy on main branch
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
       
-      - name: Deploy with Docker Compose
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            # Navigate to your app directory
-            # cd /opt/your-app
+  #     - name: Deploy with Docker Compose
+  #       uses: appleboy/ssh-action@v0.1.5
+  #       with:
+  #         host: ${{ secrets.SERVER_HOST }}
+  #         username: ${{ secrets.SERVER_USER }}
+  #         key: ${{ secrets.SERVER_SSH_KEY }}
+  #         script: |
+  #           # Pull latest images
+  #           echo "📦 Pulling latest images..."
+  #           docker-compose pull
             
-            # Pull latest images
-            echo "📦 Pulling latest images..."
-            docker-compose pull
+  #           # Stop and remove old containers
+  #           echo "🔄 Restarting containers..."
+  #           docker-compose down
             
-            # Stop and remove old containers
-            echo "🔄 Restarting containers..."
-            docker-compose down
+  #           # Start new containers
+  #           docker-compose up -d --remove-orphans
             
-            # Start new containers
-            docker-compose up -d --remove-orphans
+  #           # Clean up old images
+  #           echo "🧹 Cleaning up..."
+  #           docker system prune -f
             
-            # Clean up old images
-            echo "🧹 Cleaning up..."
-            docker system prune -f
-            
-            # Check if containers are running
-            echo "✅ Checking container status..."
-            docker-compose ps
+  #           # Check if containers are running
+  #           echo "✅ Checking container status..."
+  #           docker-compose ps
   # deploy:
   #   runs-on: ubuntu-latest
   #   steps:
