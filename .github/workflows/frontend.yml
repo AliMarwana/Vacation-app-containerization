@@ -16,7 +16,7 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  test:
+  lint-and-dependencies:
     runs-on: ubuntu-latest
 
     steps:
@@ -56,6 +56,19 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/frontend-vacation:${{ github.sha }}
  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          docker-compose pull
+          docker-compose up -d --remove-orphans
+          docker system prune -f
       # - name: Build and run services with Compose
       #   run: |
       #     docker build 
