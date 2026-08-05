@@ -86,7 +86,7 @@ jobs:
             
             # Check if containers are running
             echo "✅ Checking container status..."
-            docker-compose ps
+            docker compose ps
   # deploy:
   #   runs-on: ubuntu-latest
   #   steps:
