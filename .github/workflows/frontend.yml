@@ -71,14 +71,14 @@ jobs:
           script: |
             # Pull latest images
             echo "📦 Pulling latest images..."
-            docker-compose pull
+            docker compose pull
             
             # Stop and remove old containers
             echo "🔄 Restarting containers..."
-            docker-compose down
+            docker compose down
             
             # Start new containers
-            docker-compose up -d --remove-orphans
+            docker compose up -d --remove-orphans
             
             # Clean up old images
             echo "🧹 Cleaning up..."
