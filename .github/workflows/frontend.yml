@@ -61,12 +61,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Install Docker
-        run: |
-          curl -fsSL https://get.docker.com -o get-docker.sh
-          sudo sh get-docker.sh
-          sudo usermod -aG docker $USER
-          newgrp docker
       
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.5
@@ -75,24 +69,39 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Pull latest images
-            echo "📦 Pulling latest images..."
-            docker compose pull
-            
-            # Stop and remove old containers
-            echo "🔄 Restarting containers..."
-            docker compose down
-            
-            # Start new containers
-            docker compose up -d --remove-orphans
-            
-            # Clean up old images
-            echo "🧹 Cleaning up..."
-            docker system prune -f
-            
-            # Check if containers are running
-            echo "✅ Checking container status..."
-            docker compose ps
+                  # Install Docker if not present
+                  if ! command -v docker &> /dev/null; then
+                    echo "Installing Docker..."
+                    curl -fsSL https://get.docker.com -o get-docker.sh
+                    sudo sh get-docker.sh
+                    sudo usermod -aG docker $USER
+                    sudo systemctl start docker
+                  fi
+                  
+                  # Install Docker Compose if not present
+                  if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
+                    echo "Installing Docker Compose..."
+                    sudo apt-get update
+                    sudo apt-get install docker-compose -y
+                  fi
+                  # Pull latest images
+                  echo "📦 Pulling latest images..."
+                  docker compose pull
+                  
+                  # Stop and remove old containers
+                  echo "🔄 Restarting containers..."
+                  docker compose down
+                  
+                  # Start new containers
+                  docker compose up -d --remove-orphans
+                  
+                  # Clean up old images
+                  echo "🧹 Cleaning up..."
+                  docker system prune -f
+                  
+                  # Check if containers are running
+                  echo "✅ Checking container status..."
+                  docker compose ps
   # deploy:
   #   runs-on: ubuntu-latest
   #   steps:
