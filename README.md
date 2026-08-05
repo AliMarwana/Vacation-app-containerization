@@ -1,32 +1,25 @@
-This project is about containerizing a full stack app called
+This project is about automating a full stack app called
  <a href="https://github.com/obusorezekiel/Dream-Vacation-App" >Dream Vacation App</a>. </br>
-This project consists of a Frontend React app, a backend Node.js app and a Postgres database. No that few modifications have been made in the backend app from the original because the API call path to Rest countries API has been updated. It may be that the moment you will see this project, it will be another path that will be used by Rest countries API. So take it in consideration. <br><br>
-We have created a Docker container for each app and ensured the communication among them by using Docker compose.<br>
-To do that, we needed to create Dockerfiles, Docker compose file and other files. Here is what was added for each project:<br>
+We have already containerized the full stack app by using Docker compose.
+Now we intend to implement automation by using CI/CD(Continous Integration/Continous Deployment). 
+Practically when a push or a pull request is carried out, we are going to carry out the following actions:
 <ul>
-<li>Frontend<br>
- In the Frontend project, we created the Dockerfile. We implemented the multi stage builds to alleviate the size of the final Docker image of the front-end. <br><br>
- Therein we installed the node 16 image, set /app as the working directory, installed dependencies from package.json and copied the whole Frontend project. Then we built the project to retrieve app/build. <br><br>
- In the second stage, we installed the Nginx image.
- Nginx is in charge of serving the Frontend. To do that,
- We previously created the nginx.conf file which is inspired from the <a href="https://docs.docker.com/guides/reactjs/">
- React.js examples for Docker</a> and copied it in the image.  We copied the app/build to the /usr/share/nginx/html in the container. We then run this command nginx -c /etc/nginx/nginx.conf -g daemon off
-</li>
-
-<li>
-Backend:<br>
-For the Backend project, we also created the Dockerfile. Therein, we installed Node 16, installed the dependencies and run the server. 
-</li>
-<li>
-Docker-compose.yml<br>
-In that file, we put three services: frontend, backend and database.<br><br>
- As for the frontend, it will be run on the host port 8080 and container port 8080. The Dockerfile directory has been specified therein.<br><br>
- As for the backend, we put environment variables DATABASE_URL,
- PORT, COUNTRIES_API_BASE_URL in an environment file. This file is loaded in the docker compose file. It will be run on the host port 3001 and the container port 3001.<br><br>
- As for the postgres container, its base image, namely the Postgres image, has been inserted in the Docker compose file. 
- We also put  the environment variables POSTGRES_DB, 
- POSTGRES_USER and POSTGRES_PASSWORD in an .env file and put that file in the Docker compose. We created an init.db file to create the table of destinations and copied it in the docker-entrypoint-initdb.d/init.sql directory.  We also set volumes for the data. It will be run on the host port 5432 and the container port 5432<br><br>
- Note that all the services are on the same custom bridge network which is named app-network.<br>
-</li>
+<li>Make a lint check on both frontend and backend projects</li>
+<li>Build images of both frontend and backend projects</li>
+<li>Push them to the Docker Hub registry</li>
+<li>Deploying the app on a public IP address</li>
 </ul>
-Having said this, all you have do right now is to run in the root directory of the project docker-compose up --build after having run Docker Desktop on your computer. You then need to launch http://localhost:8080/ on your browser to add/remove destinations in your database.
+The first three items are part of the CI. The last one is the CD.
+In other words, CI is about integrating any changes from the local environment to the cloud by making the changes accessible through images of a registry. CD is about deploying the changes from the images of the registry.<br>
+What is relevant in this is that any changes is automatically visible on production. Any bugs will be detected earlier.
+
+Practically, the automation has been managed in two files:
+<ul>
+<li>.github/workflows/frontend.yml</li>
+<li>.github/workflows/backend.yml</li>
+</ul>
+In frontend.yml, we made the lint check, the frontend image build and the deployment on http://68.183.124.41:8080/.
+In backend.yml, we also made the link check and the backend image build. <br>
+Therefore, to test the automation, you can just clone the vacation, make some changes in the interface, and do a pull request or a push. Your changes will be available on this address. You can also check http://68.183.124.41:8080/ whether you made changes or not.
+
+
