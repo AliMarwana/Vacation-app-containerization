@@ -84,6 +84,13 @@ jobs:
                     sudo apt-get update
                     sudo apt-get install docker-compose -y
                   fi
+                  if [ -d ".git" ]; then
+                  echo "🔄 Pulling latest changes..."
+                  git pull origin main
+                  else
+                  echo "📦 Cloning repository..."
+                  git clone https://github.com/${{ github.repository }}.git .
+                  fi
                   # Pull latest images
                   echo "📦 Pulling latest images..."
                   docker compose pull
