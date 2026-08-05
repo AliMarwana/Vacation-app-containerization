@@ -75,8 +75,9 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ${{ env.DOCKER_USERNAME }}/backend-vacation:latest  # # ✅ TESTING JOB (with Docker Compose)
-            ${{ env.DOCKER_USERNAME }}/backend-vacation:${{ github.sha }}  # # ✅ TESTING JOB (with Docker Compose)
+          
+            ${{ secrets.DOCKER_USERNAME }}/backend-vacation:latest
+            ${{ secrets.DOCKER_USERNAME }}/backend-vacation:${{ github.sha }}
   # test:
   #   runs-on: ubuntu-latest
   #   needs: lint
