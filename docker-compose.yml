@@ -3,9 +3,10 @@ services:
   # FRONTEND SERVICE (React/Vue/Angular)
   # ============================================
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./frontend
+    #   dockerfile: Dockerfile
+    image: alimarwana/frontend-vacation:latest
     container_name: frontend-app
     ports:
       - "8080:8080"  # Map host port 80 to container port 80
@@ -20,9 +21,10 @@ services:
   # BACKEND SERVICE (Node.js/Express)
   # ============================================
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    image: alimarwana/backend-vacation:latest
     container_name: backend-app
     ports:
       - "3001:3001"  # Map host port 5000 to container port 5000

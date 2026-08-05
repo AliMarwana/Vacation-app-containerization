@@ -54,6 +54,8 @@ jobs:
           context: ./frontend
           push: true
           tags: |
+          
+            ${{ secrets.DOCKER_USERNAME }}/frontend-vacation:latest
             ${{ secrets.DOCKER_USERNAME }}/frontend-vacation:${{ github.sha }}
   deploy:
     needs: build-and-push
