@@ -76,7 +76,6 @@ jobs:
           push: true
           tags: |
           
-            ${{ secrets.DOCKER_USERNAME }}/backend-vacation:latest
             ${{ secrets.DOCKER_USERNAME }}/backend-vacation:${{ github.sha }}
   # test:
   #   runs-on: ubuntu-latest
