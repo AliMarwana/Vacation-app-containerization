@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Dream Vacation Destinations</h1>
+      <h1>Dream Vacation Destinations a</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
